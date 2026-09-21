@@ -150,6 +150,7 @@ import numpy as np
 import numpy as np
 
 def detect_superperiod_differences(packets, L, ignore_sizes={84, 76}):
+# def detect_superperiod_differences(packets, L, ignore_sizes={}):
     """
     Compare consecutive superperiod segments in a packet trace and identify
     where traffic patterns change the most.

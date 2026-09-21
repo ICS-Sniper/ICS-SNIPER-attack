@@ -135,13 +135,18 @@ def main():
     # analyze_packet_segments(packets[endpoints_and_protocol['ip_plc']],[253,1206,115,113,73,97,100,93,103,85,89,120,83,81,72,109,101,76,91,189],420)
     # analyze_packet_segments(packets[endpoints_and_protocol['ip_plc']],[],superperiod)
     #######################################################################
-    results = detect_superperiod_differences(packets[endpoints_and_protocol['ip_plc']], L= superperiod) 
-    #
-    # print(results)
-    # print("Segment with maximum 84-packet count difference:")
-    # print(results["max_diff_segment"])
+    results = detect_superperiod_differences(packets[endpoints_and_protocol['ip_plc']], L= superperiod)
 
-    # print("\nAll segment differences:")
+    # ######### Uncomment following block ################
+    for d in results["all_differences"]:
+        print(f"Seg {d['segment_index']}: "
+              f"[{d['start_time']:.2f}-{d['end_time']:.2f}]s | "
+              f"num_packets_diff={d['num_packets_diff']} | "
+              f"size_set_diff={d['size_set_diff']} | "
+              f"combined_diff={d['combined_diff']}")
+
+    results = detect_superperiod_differences(packets[endpoints_and_protocol['ip_scada']], L= superperiod) 
+
     # ######### Uncomment following block ################
     for d in results["all_differences"]:
         print(f"Seg {d['segment_index']}: "
