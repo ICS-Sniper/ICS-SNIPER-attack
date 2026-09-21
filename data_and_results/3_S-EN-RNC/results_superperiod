@@ -1,0 +1,88 @@
+Parsed all input arguments
+./data_and_results/3_S-EN-RNC/s-en-rnc.pcap
+Analyzing PLC->router stable regions:
+
+
+Selected Cluster 2 (longest stable durations):
+
+
+[start times] highest score     : 70.00  (score 0.8822, cluster 1)
+[start times] highest frequency : 420.00  (count 24, cluster 2)
+[start times] FINAL PERIOD      : 420.00   <- 70 x 6 = 420 lies in cluster 2 [399, 445] of top-frequency period 420
+
+[end times] highest score     : 70.00  (score 0.9094, cluster 1)
+[end times] highest frequency : 420.00  (count 22, cluster 2)
+[end times] FINAL PERIOD      : 420.00   <- 70 x 6 = 420 lies in cluster 2 [390, 435] of top-frequency period 420
+Analyzing SCADA->router IATs:
+
+
+Selected Cluster 1 (longest stable durations):
+
+
+[start times] highest score     : 70.00  (score 0.9730, cluster 1)
+[start times] highest frequency : 420.00  (count 16, cluster 2)
+[start times] FINAL PERIOD      : 420.00   <- 70 x 6 = 420 lies in cluster 2 [372, 431] of top-frequency period 420
+
+[end times] highest score     : 70.00  (score 0.9687, cluster 1)
+[end times] highest frequency : 420.00  (count 28, cluster 2)
+[end times] FINAL PERIOD      : 420.00   <- 70 x 6 = 420 lies in cluster 2 [410, 430] of top-frequency period 420
+Analyzing PLC->router IATs:
+
+Extracted IATs
+
+Dominant period by IAT cluster:
+
+IAT Cluster 1: count=492237 first=73.753373 last=14053.319549 duration=13979.566175s best score=0.0114 period=9
+IAT Cluster 2: count=133807 first=73.734490 last=14053.392352 duration=13979.657862s best score=0.0059 period=9
+IAT Cluster 3: count=7 first=10.540507 last=71.335883 duration=60.795376s best score=0.9963 period=10
+Analyzing SCADA->router IATs:
+
+Extracted IATs
+
+Dominant period by IAT cluster:
+
+IAT Cluster 1: count=340081 first=73.777672 last=14053.390299 duration=13979.612628s best score=0.0209 period=9
+IAT Cluster 2: count=154247 first=73.777069 last=14053.267881 duration=13979.490813s best score=0.0092 period=8
+IAT Cluster 3: count=30884 first=73.865911 last=14053.361932 duration=13979.496020s best score=0.0233 period=7
+IAT Cluster 4: count=7 first=14.275469 last=73.735486 duration=59.460017s best score=0.9745 period=10
+Analyzing PLC->router packet sizes:
+
+
+Dominant period by packet size:
+
+
+Periods by cumulative score:
+
+Period 9: cumulative score=0.3450 cumulative count=587713 sizes=[76, 84, 104, 158, 160, 162]
+Period 5: cumulative score=0.3187 cumulative count=18176 sizes=[164, 166, 168]
+Period 10: cumulative score=1.1530 cumulative count=10812 sizes=[40, 156]
+Period 30: cumulative score=3.3863 cumulative count=3037 sizes=[170, 174, 178, 182, 186]
+Period 60: cumulative score=0.8788 cumulative count=1828 sizes=[154]
+Period 18: cumulative score=0.5886 cumulative count=1467 sizes=[172]
+Period 35: cumulative score=0.3394 cumulative count=1068 sizes=[180]
+Period 70: cumulative score=1.6520 cumulative count=1035 sizes=[184, 188]
+Period 20: cumulative score=0.5421 cumulative count=675 sizes=[176]
+Period 84: cumulative score=0.2419 cumulative count=191 sizes=[88]
+Period 3357: cumulative score=5.0000 cumulative count=25 sizes=[66, 335, 452, 1112, 1124]
+Period 1119: cumulative score=1.0000 cumulative count=20 sizes=[62]
+Period 3801: cumulative score=0.9948 cumulative count=3 sizes=[72]
+Analyzing SCADA->router packet sizes:
+
+
+Dominant period by packet size:
+
+
+Periods by cumulative score:
+
+Period 9: cumulative score=0.1416 cumulative count=362707 sizes=[76, 84, 124]
+Period 8: cumulative score=0.0117 cumulative count=89251 sizes=[104]
+Period 10: cumulative score=0.9984 cumulative count=72468 sizes=[40, 120]
+Period 74: cumulative score=0.1910 cumulative count=442 sizes=[88]
+Period 70: cumulative score=0.9679 cumulative count=199 sizes=[126]
+Period 15: cumulative score=0.3512 cumulative count=112 sizes=[64]
+Period 3396: cumulative score=5.0000 cumulative count=20 sizes=[66, 335, 455, 1112, 1124]
+Period 1132: cumulative score=1.0000 cumulative count=16 sizes=[62]
+Period 3939: cumulative score=0.9781 cumulative count=4 sizes=[72]
+
+
+

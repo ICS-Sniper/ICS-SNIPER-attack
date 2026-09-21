@@ -1,0 +1,91 @@
+Parsed all input arguments
+./data_and_results/2_S-EN-BASE/s-en-base.pcap
+Analyzing PLC->router stable regions:
+
+
+Selected Cluster 2 (longest stable durations):
+
+
+[start times] highest score     : 70.00  (score 0.8148, cluster 1)
+[start times] highest frequency : 420.00  (count 20, cluster 2)
+[start times] FINAL PERIOD      : 420.00   <- 70 x 6 = 420 lies in cluster 2 [401, 426] of top-frequency period 420
+
+[end times] highest score     : 32.00  (score 0.8569, cluster 1)
+[end times] highest frequency : 420.00  (count 22, cluster 2)
+[end times] FINAL PERIOD      : 416.00   <- 32 x 13 = 416 lies in cluster 2 [406, 424] of top-frequency period 420
+Analyzing SCADA->router IATs:
+
+
+Selected Cluster 2 (longest stable durations):
+
+
+[start times] highest score     : 70.00  (score 0.8492, cluster 1)
+[start times] highest frequency : 420.00  (count 20, cluster 2)
+[start times] FINAL PERIOD      : 420.00   <- 70 x 6 = 420 lies in cluster 2 [400, 425] of top-frequency period 420
+
+[end times] highest score     : 32.00  (score 0.8505, cluster 1)
+[end times] highest frequency : 420.00  (count 22, cluster 2)
+[end times] FINAL PERIOD      : 416.00   <- 32 x 13 = 416 lies in cluster 2 [416, 424] of top-frequency period 420
+Analyzing PLC->router IATs:
+
+Extracted IATs
+
+Dominant period by IAT cluster:
+
+IAT Cluster 1: count=501480 first=75.821072 last=14399.982117 duration=14324.161045s best score=0.0168 period=5
+IAT Cluster 2: count=139959 first=76.030344 last=14399.962265 duration=14323.931921s best score=0.0097 period=10
+IAT Cluster 3: count=56 first=135.803336 last=13995.954473 duration=13860.151138s best score=0.9258 period=30
+IAT Cluster 4: count=7 first=17.409899 last=75.797190 duration=58.387291s best score=0.9817 period=10
+Analyzing SCADA->router IATs:
+
+Extracted IATs
+
+Dominant period by IAT cluster:
+
+IAT Cluster 1: count=459990 first=75.841435 last=14399.982902 duration=14324.141467s best score=0.0223 period=5
+IAT Cluster 2: count=75149 first=76.094451 last=14399.963216 duration=14323.868765s best score=0.0142 period=9
+IAT Cluster 3: count=56 first=75.799272 last=13995.955743 duration=13920.156471s best score=0.9871 period=60
+IAT Cluster 4: count=7 first=9.619127 last=69.729200 duration=60.110073s best score=0.9862 period=10
+Analyzing PLC->router packet sizes:
+
+
+Dominant period by packet size:
+
+
+Periods by cumulative score:
+
+Period 5: cumulative score=0.1731 cumulative count=557494 sizes=[76, 84, 104, 166]
+Period 8: cumulative score=0.3895 cumulative count=38378 sizes=[156, 158, 162]
+Period 9: cumulative score=0.1204 cumulative count=25229 sizes=[160]
+Period 10: cumulative score=1.2491 cumulative count=11013 sizes=[40, 164, 168]
+Period 60: cumulative score=1.8024 cumulative count=3004 sizes=[154, 170, 176]
+Period 30: cumulative score=1.4619 cumulative count=1635 sizes=[178, 182]
+Period 18: cumulative score=0.6011 cumulative count=1504 sizes=[172]
+Period 35: cumulative score=0.3755 cumulative count=1091 sizes=[180]
+Period 70: cumulative score=1.6748 cumulative count=1057 sizes=[184, 188]
+Period 20: cumulative score=0.5197 cumulative count=545 sizes=[174]
+Period 15: cumulative score=0.7030 cumulative count=477 sizes=[186]
+Period 19: cumulative score=0.6370 cumulative count=27 sizes=[88]
+Period 3357: cumulative score=5.0000 cumulative count=25 sizes=[66, 335, 452, 1112, 1124]
+Period 1119: cumulative score=1.0000 cumulative count=20 sizes=[62]
+Period 3832: cumulative score=0.9724 cumulative count=4 sizes=[72]
+Analyzing SCADA->router packet sizes:
+
+
+Dominant period by packet size:
+
+
+Periods by cumulative score:
+
+Period 5: cumulative score=0.0540 cumulative count=443603 sizes=[76, 84, 104]
+Period 10: cumulative score=1.0080 cumulative count=74212 sizes=[40, 120]
+Period 9: cumulative score=0.1506 cumulative count=17087 sizes=[124]
+Period 70: cumulative score=0.9812 cumulative count=204 sizes=[126]
+Period 193: cumulative score=0.5914 cumulative count=43 sizes=[88]
+Period 3396: cumulative score=5.0000 cumulative count=20 sizes=[66, 335, 455, 1112, 1124]
+Period 1132: cumulative score=1.0000 cumulative count=16 sizes=[62]
+Period 1791: cumulative score=0.8989 cumulative count=13 sizes=[64]
+Period 3750: cumulative score=0.9928 cumulative count=4 sizes=[72]
+
+
+

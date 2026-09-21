@@ -1,0 +1,55 @@
+Parsed all input arguments
+./data_and_results/5_H-MD-BASE/h-md-base.pcap
+Analyzing PLC->router stable regions:
+
+Cannot find stable periods
+Analyzing SCADA->router IATs:
+
+Cannot find stable periods
+Analyzing PLC->router IATs:
+
+Extracted IATs
+
+Dominant period by IAT cluster:
+
+IAT Cluster 1: count=236939 first=0.849178 last=7378.884664 duration=7378.035486s best score=0.1897 period=5
+IAT Cluster 2: count=11251 first=4.088653 last=7378.244045 duration=7374.155391s best score=0.3224 period=6
+Analyzing SCADA->router IATs:
+
+Extracted IATs
+
+Dominant period by IAT cluster:
+
+IAT Cluster 1: count=211262 first=1.119449 last=7378.885610 duration=7377.766161s best score=0.2097 period=5
+IAT Cluster 2: count=6098 first=1.118605 last=7377.973625 duration=7376.855020s best score=0.3708 period=6
+Analyzing PLC->router packet sizes:
+
+
+Dominant period by packet size:
+
+
+Periods by cumulative score:
+
+Period 5: cumulative score=3.2152 cumulative count=198202 sizes=[72, 76, 81, 83, 89, 91, 97]
+Period 6: cumulative score=3.4318 cumulative count=48392 sizes=[64, 85, 101, 103, 109]
+Period 10: cumulative score=2.8204 cumulative count=1454 sizes=[113, 115, 120, 189]
+Period 887: cumulative score=0.9442 cumulative count=53 sizes=[100]
+Period 886: cumulative score=0.9447 cumulative count=23 sizes=[93]
+Period 891: cumulative score=0.9591 cumulative count=21 sizes=[73]
+Period 3554: cumulative score=6.0000 cumulative count=20 sizes=[66, 70, 78, 82, 420, 432]
+Period 720: cumulative score=0.9998 cumulative count=10 sizes=[253]
+Period 237: cumulative score=1.0000 cumulative count=9 sizes=[1206]
+Analyzing SCADA->router packet sizes:
+
+
+Dominant period by packet size:
+
+
+Periods by cumulative score:
+
+Period 5: cumulative score=1.8374 cumulative count=153886 sizes=[64, 68, 76, 83]
+Period 6: cumulative score=2.3305 cumulative count=63452 sizes=[75, 77, 85, 87]
+Period 1200: cumulative score=1.0000 cumulative count=10 sizes=[62]
+
+
+

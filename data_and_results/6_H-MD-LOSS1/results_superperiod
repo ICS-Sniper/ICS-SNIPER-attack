@@ -1,0 +1,57 @@
+Parsed all input arguments
+./data_and_results/6_H-MD-LOSS1/h-md-loss1.pcap
+Analyzing PLC->router stable regions:
+
+Cannot find stable periods
+Analyzing SCADA->router IATs:
+
+Cannot find stable periods
+Analyzing PLC->router IATs:
+
+Extracted IATs
+
+Dominant period by IAT cluster:
+
+IAT Cluster 1: count=319960 first=0.203989 last=8956.017856 duration=8955.813867s best score=0.1110 period=5
+IAT Cluster 2: count=10 first=2725.515468 last=3172.449851 duration=446.934383s best score=0.8981 period=16
+  Value:  too few instances (1) — skipped
+Analyzing SCADA->router IATs:
+
+Extracted IATs
+
+Dominant period by IAT cluster:
+
+IAT Cluster 1: count=255087 first=0.550228 last=8956.003646 duration=8955.453418s best score=0.1556 period=5
+IAT Cluster 2: count=13528 first=0.475746 last=8955.560687 duration=8955.084941s best score=0.1688 period=5
+Analyzing PLC->router packet sizes:
+
+
+Dominant period by packet size:
+
+
+Periods by cumulative score:
+
+Period 5: cumulative score=3.2083 cumulative count=298827 sizes=[64, 72, 76, 81, 83, 91, 97]
+Period 6: cumulative score=2.5152 cumulative count=12323 sizes=[85, 101, 103, 109]
+Period 10: cumulative score=3.2362 cumulative count=8657 sizes=[89, 113, 115, 120, 189]
+Period 299: cumulative score=1.8983 cumulative count=74 sizes=[93, 100]
+Period 300: cumulative score=0.9569 cumulative count=24 sizes=[73]
+Period 3559: cumulative score=6.0000 cumulative count=20 sizes=[66, 70, 78, 82, 420, 432]
+Period 719: cumulative score=0.9999 cumulative count=12 sizes=[253]
+Period 1186: cumulative score=1.0000 cumulative count=9 sizes=[1206]
+Period 47: cumulative score=0.9960 cumulative count=4 sizes=[1]
+Analyzing SCADA->router packet sizes:
+
+
+Dominant period by packet size:
+
+
+Periods by cumulative score:
+
+Period 5: cumulative score=2.1323 cumulative count=256174 sizes=[64, 68, 75, 76, 83, 87]
+Period 6: cumulative score=1.3968 cumulative count=12412 sizes=[77, 85]
+Period 3500: cumulative score=5.0000 cumulative count=15 sizes=[66, 335, 460, 1112, 1124]
+Period 1167: cumulative score=1.0000 cumulative count=12 sizes=[62]
+
+
+
