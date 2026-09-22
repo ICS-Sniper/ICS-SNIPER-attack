@@ -250,4 +250,4 @@ We follow the same logic as the H-MD-* configurations here. Following that, Seg1
 > The H-MD-* configurations were left running for longer than one operational cycle. Please consider only the first 30, 30 and 34 superperiods for H-MD-BASE, H-MD-LOSS1 and H-MD-LOSS2 respectively.
 
 ## Experiment E3: Attack execution
-Run the testbed for one complete operational cycle. Just when the PLC-to-SCADA communication begins, execute active_attack.sh at the compromised router. 
+Run the testbed for one complete operational cycle. Just when the PLC-to-SCADA communication begins, execute `active_attack/active_attack.sh` at the compromised router. Before running the script, open it and configure the packet drop durations for each attack scenario. Comment/uncomment lines 2, 3, 12, and 13, as required.
