@@ -1,0 +1,46 @@
+Parsed all input arguments
+./data_and_results/7_H-MD-LOSS2/h-md-loss2.pcap
+Starting pcap processing
+pcap processing completed - Extracted all relevant packet information
+Seg 1: [215.00-425.00]s | num_packets_diff=102 | size_set_diff=14 | combined_diff=116
+Seg 2: [425.00-635.00]s | num_packets_diff=175 | size_set_diff=3 | combined_diff=178
+Seg 3: [635.00-845.00]s | num_packets_diff=89 | size_set_diff=3 | combined_diff=92
+Seg 4: [845.00-1055.00]s | num_packets_diff=26 | size_set_diff=0 | combined_diff=26
+Seg 5: [1055.00-1265.00]s | num_packets_diff=89 | size_set_diff=0 | combined_diff=89
+Seg 6: [1265.00-1475.00]s | num_packets_diff=25 | size_set_diff=2 | combined_diff=27
+Seg 7: [1475.00-1685.00]s | num_packets_diff=66 | size_set_diff=3 | combined_diff=69
+Seg 8: [1685.00-1895.00]s | num_packets_diff=76 | size_set_diff=1 | combined_diff=77
+Seg 9: [1895.00-2105.00]s | num_packets_diff=29 | size_set_diff=0 | combined_diff=29
+Seg 10: [2105.00-2315.00]s | num_packets_diff=126 | size_set_diff=1 | combined_diff=127
+Seg 11: [2315.00-2525.00]s | num_packets_diff=26 | size_set_diff=4 | combined_diff=30
+Seg 12: [2525.00-2735.00]s | num_packets_diff=50 | size_set_diff=3 | combined_diff=53
+Seg 13: [2735.00-2945.00]s | num_packets_diff=119 | size_set_diff=0 | combined_diff=119
+Seg 14: [2945.00-3155.00]s | num_packets_diff=41 | size_set_diff=0 | combined_diff=41
+Seg 15: [3155.00-3365.00]s | num_packets_diff=40 | size_set_diff=3 | combined_diff=43
+Seg 16: [3365.00-3575.00]s | num_packets_diff=180 | size_set_diff=9 | combined_diff=189
+Seg 17: [3575.00-3785.00]s | num_packets_diff=35 | size_set_diff=6 | combined_diff=41
+Seg 18: [3785.00-3995.00]s | num_packets_diff=29 | size_set_diff=0 | combined_diff=29
+Seg 19: [3995.00-4205.00]s | num_packets_diff=91 | size_set_diff=2 | combined_diff=93
+Seg 20: [4205.00-4415.00]s | num_packets_diff=93 | size_set_diff=3 | combined_diff=96
+Seg 21: [4415.00-4625.00]s | num_packets_diff=102 | size_set_diff=1 | combined_diff=103
+Seg 22: [4625.00-4835.00]s | num_packets_diff=110 | size_set_diff=0 | combined_diff=110
+Seg 23: [4835.00-5045.00]s | num_packets_diff=216 | size_set_diff=3 | combined_diff=219
+Seg 24: [5045.00-5255.00]s | num_packets_diff=205 | size_set_diff=3 | combined_diff=208
+Seg 25: [5255.00-5465.00]s | num_packets_diff=128 | size_set_diff=0 | combined_diff=128
+Seg 26: [5465.00-5675.00]s | num_packets_diff=125 | size_set_diff=1 | combined_diff=126
+Seg 27: [5675.00-5885.00]s | num_packets_diff=88 | size_set_diff=2 | combined_diff=90
+Seg 28: [5885.00-6095.00]s | num_packets_diff=29 | size_set_diff=3 | combined_diff=32
+Seg 29: [6095.00-6305.00]s | num_packets_diff=57 | size_set_diff=2 | combined_diff=59
+Seg 30: [6305.00-6515.00]s | num_packets_diff=95 | size_set_diff=0 | combined_diff=95
+Seg 31: [6515.00-6725.00]s | num_packets_diff=65 | size_set_diff=1 | combined_diff=66
+Seg 32: [6725.00-6935.00]s | num_packets_diff=135 | size_set_diff=5 | combined_diff=140
+Seg 33: [6935.00-7145.00]s | num_packets_diff=257 | size_set_diff=4 | combined_diff=261
+Seg 34: [7145.00-7355.00]s | num_packets_diff=2 | size_set_diff=1 | combined_diff=3
+Seg 35: [7355.00-7565.00]s | num_packets_diff=218 | size_set_diff=1 | combined_diff=219
+Seg 36: [7565.00-7775.00]s | num_packets_diff=96 | size_set_diff=0 | combined_diff=96
+Seg 37: [7775.00-7985.00]s | num_packets_diff=48 | size_set_diff=0 | combined_diff=48
+Seg 38: [7985.00-8195.00]s | num_packets_diff=29 | size_set_diff=1 | combined_diff=30
+Seg 39: [8195.00-8405.00]s | num_packets_diff=7 | size_set_diff=1 | combined_diff=8
+Seg 40: [8405.00-8615.00]s | num_packets_diff=143 | size_set_diff=0 | combined_diff=143
+Seg 41: [8615.00-8825.00]s | num_packets_diff=62 | size_set_diff=2 | combined_diff=64
+Seg 42: [8825.00-9035.00]s | num_packets_diff=55 | size_set_diff=2 | combined_diff=57

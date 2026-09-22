@@ -107,8 +107,8 @@ def detect_protocol(packets_by_ip: dict) -> dict:
     # print(f"[detect_protocol] Packet counts : {dict(top2)}")
     # print(f"[detect_protocol] y:x ratio     : {ratio:.3f}")
     # print(f"[detect_protocol] Protocol      : {protocol}")
-    # print(f"[detect_protocol] PLC           : {ip_plc}  ({counts[ip_plc]} pkts)")
-    # print(f"[detect_protocol] SCADA         : {ip_scada} ({counts[ip_scada]} pkts)")
+    print(f"[detect_protocol] PLC           : {ip_plc}  ({counts[ip_plc]} pkts)")
+    print(f"[detect_protocol] SCADA         : {ip_scada} ({counts[ip_scada]} pkts)")
 
     return result
 

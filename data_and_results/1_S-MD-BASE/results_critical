@@ -1,0 +1,35 @@
+Parsed all input arguments
+./data_and_results/1_S-MD-BASE/s-md-base.pcap
+Seg 1: [449.00-869.00]s | num_packets_diff=589 | size_set_diff=0 | combined_diff=589
+Seg 2: [869.00-1289.00]s | num_packets_diff=27 | size_set_diff=1 | combined_diff=28
+Seg 3: [1289.00-1709.00]s | num_packets_diff=154 | size_set_diff=0 | combined_diff=154
+Seg 4: [1709.00-2129.00]s | num_packets_diff=228 | size_set_diff=1 | combined_diff=229
+Seg 5: [2129.00-2549.00]s | num_packets_diff=95 | size_set_diff=1 | combined_diff=96
+Seg 6: [2549.00-2969.00]s | num_packets_diff=257 | size_set_diff=3 | combined_diff=260
+Seg 7: [2969.00-3389.00]s | num_packets_diff=228 | size_set_diff=3 | combined_diff=231
+Seg 8: [3389.00-3809.00]s | num_packets_diff=344 | size_set_diff=1 | combined_diff=345
+Seg 9: [3809.00-4229.00]s | num_packets_diff=120 | size_set_diff=1 | combined_diff=121
+Seg 10: [4229.00-4649.00]s | num_packets_diff=27 | size_set_diff=3 | combined_diff=30
+Seg 11: [4649.00-5069.00]s | num_packets_diff=226 | size_set_diff=1 | combined_diff=227
+Seg 12: [5069.00-5489.00]s | num_packets_diff=187 | size_set_diff=1 | combined_diff=188
+Seg 13: [5489.00-5909.00]s | num_packets_diff=45 | size_set_diff=1 | combined_diff=46
+Seg 14: [5909.00-6329.00]s | num_packets_diff=8 | size_set_diff=1 | combined_diff=9
+Seg 15: [6329.00-6749.00]s | num_packets_diff=188 | size_set_diff=1 | combined_diff=189
+Seg 16: [6749.00-7169.00]s | num_packets_diff=383 | size_set_diff=1 | combined_diff=384
+Seg 17: [7169.00-7589.00]s | num_packets_diff=413 | size_set_diff=0 | combined_diff=413
+Seg 18: [7589.00-8009.00]s | num_packets_diff=301 | size_set_diff=1 | combined_diff=302
+Seg 19: [8009.00-8429.00]s | num_packets_diff=259 | size_set_diff=1 | combined_diff=260
+Seg 20: [8429.00-8849.00]s | num_packets_diff=130 | size_set_diff=1 | combined_diff=131
+Seg 21: [8849.00-9269.00]s | num_packets_diff=141 | size_set_diff=1 | combined_diff=142
+Seg 22: [9269.00-9689.00]s | num_packets_diff=15 | size_set_diff=1 | combined_diff=16
+Seg 23: [9689.00-10109.00]s | num_packets_diff=314 | size_set_diff=1 | combined_diff=315
+Seg 24: [10109.00-10529.00]s | num_packets_diff=45 | size_set_diff=1 | combined_diff=46
+Seg 25: [10529.00-10949.00]s | num_packets_diff=89 | size_set_diff=1 | combined_diff=90
+Seg 26: [10949.00-11369.00]s | num_packets_diff=188 | size_set_diff=2 | combined_diff=190
+Seg 27: [11369.00-11789.00]s | num_packets_diff=517 | size_set_diff=2 | combined_diff=519
+Seg 28: [11789.00-12209.00]s | num_packets_diff=143 | size_set_diff=3 | combined_diff=146
+Seg 29: [12209.00-12629.00]s | num_packets_diff=87 | size_set_diff=1 | combined_diff=88
+Seg 30: [12629.00-13049.00]s | num_packets_diff=180 | size_set_diff=2 | combined_diff=182
+Seg 31: [13049.00-13469.00]s | num_packets_diff=149 | size_set_diff=2 | combined_diff=151
+Seg 32: [13469.00-13889.00]s | num_packets_diff=0 | size_set_diff=1 | combined_diff=1
+Seg 33: [13889.00-14309.00]s | num_packets_diff=29 | size_set_diff=0 | combined_diff=29

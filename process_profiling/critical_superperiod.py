@@ -8,7 +8,7 @@ import pyshark
 from collections import defaultdict
 from sklearn.cluster import KMeans
 import numpy as np
-from traffic_processing import *
+# from traffic_processing import *
 import pickle
 from typing import List, Tuple, Union
 import math
@@ -26,108 +26,126 @@ def parse_arguments() -> Tuple[str, str, str]:
     """
     parser = argparse.ArgumentParser(description="Process OpenVPN traffic from pcap.")
     parser.add_argument("pcap_file", help="Path to the input pcap file")
-    parser.add_argument("ip_compromised", help="IP address of compromised router")
+    parser.add_argument("ip_address_1", help="IP address of endpoint#1 to filter OpenVPN traffic")
+    parser.add_argument("ip_address_2", help="IP address of endpoint#2 to filter OpenVPN traffic")
     parser.add_argument("superperiod", help="Superperiod determined from Step 1")
     args = parser.parse_args()
     print("Parsed all input arguments")
     # return args.pcap_file, args.ip_address_1, args.ip_address_2, args.ip_compromised
-    return args.pcap_file, args.ip_compromised, int(args.superperiod)
+    return args.pcap_file, args.ip_address_1, args.ip_address_2, int(args.superperiod)
 
-def detect_protocol(packets_by_ip: dict) -> dict:
+def extract_payload_sizes(pkt,ip_address):
     """
-    Identify whether the protocol is connected or unconnected
-
+    Extract size(s) of OpenVPN payload(s) from the packet.
     Args:
-        packets_by_ip: dict where keys are IP addresses and values are lists of
-                       packet tuples. Modified in-place to keep only the top 2 IPs.
-
+        pkt: The packet to extract payloads from.
     Returns:
-        dict with keys:
-            - "ip_plc"        : IP address designated as the PLC
-            - "ip_scada"      : IP address designated as the SCADA system
-            - "protocol"      : Detected protocol ("Connected" or "Unconnected")
-            - "packet_counts" : {ip: count} for the top 2 IPs
+        A list of sizes if multiple OpenVPN layers exist, else a single integer.
     """
+    sizes = []
+    dir_flag = 1
+    # if pkt.ip.dst in ip_address:
+    #     dir_flag = -1
+    # print(pkt.layers)
+    if pkt.highest_layer == "OPENVPN":
+        length = pkt.openvpn.plen
+        if length is not None:
+            try:
+                sizes.append(dir_flag*int(length))
+            except ValueError:
+                pass  # skip malformed values
+    if pkt.highest_layer == "TCP":
+        length = pkt.tcp.len
+        if length is not None:
+            try:
+                sizes.append(dir_flag*int(length))
+            except ValueError:
+                pass  # skip malformed values
 
-    # ------------------------------------------------------------------ #
-    # Step 1: Count packets per IP and select top 2                       #
-    # ------------------------------------------------------------------ #
+    if not sizes:
+        return 0
+    # print ("All payload extracted")
+    return sizes if len(sizes) > 1 else [sizes[0]]    
 
-    counts = {ip: len(pkts) for ip, pkts in packets_by_ip.items()}
-    top2   = sorted(counts.items(), key=lambda x: x[1], reverse=True)[:2]
+def process_pcap(pcap_file: str, ip_address_1: str, ip_address_2: str) -> List[PacketTuple]:
+    """
+    Processes the pcap file and extract OpenVPN payload sizes and inter-packet timings.
+    Args:
+        pcap_file: Path to the input pcap file.
+        ip_address: IP address to filter OpenVPN traffic.
+    Returns:
+        A list of tuples: (payload size(s), time delta with previous packet).
+    """
+    print("Starting pcap processing")
+    # actual_filter: openvpn and ip.addr==96.49.203.41&& openvpn.plen>70  && openvpn.plen!=112 && openvpn.plen!=104 && !(ip.dst==96.49.203.41 && openvpn.plen==132) && (!(tcp.analysis.retransmission || tcp.analysis.fast_retransmission || tcp.analysis.out_of_order || tcp.analysis.spurious_retransmission || tcp.analysis.keep_alive || tcp.analysis.window_update))
+    # display_filter = f"openvpn && ip.addr == {ip_address} && frame.len>=144 && (!(tcp.analysis.retransmission || tcp.analysis.fast_retransmission || tcp.analysis.out_of_order || tcp.analysis.spurious_retransmission || tcp.analysis.keep_alive || tcp.analysis.window_update))"
+    # display_filter = f"openvpn and ip.addr=={ip_address} && (!(tcp.analysis.retransmission || tcp.analysis.fast_retransmission || tcp.analysis.out_of_order || tcp.analysis.spurious_retransmission || tcp.analysis.keep_alive || tcp.analysis.window_update))"
+    display_filter = f"tcp and (ip.addr=={ip_address_1}||ip.addr=={ip_address_2}) && (!(tcp.analysis.retransmission || tcp.analysis.fast_retransmission || tcp.analysis.out_of_order || tcp.analysis.spurious_retransmission || tcp.analysis.keep_alive || tcp.analysis.window_update))"
+    cap = pyshark.FileCapture(pcap_file, display_filter=display_filter, keep_packets=False)
 
-    if len(top2) < 2:
-        raise ValueError(f"Need at least 2 IP addresses, found {len(top2)}.")
+    result = []
+    ip_address = [ip_address_1, ip_address_2]
+    prev_time = None
+    start_ts = -99
 
-    # Remove all IPs that are not in the top 2 (in-place)
-    top2_ips = {ip for ip, _ in top2}
-    for ip in list(packets_by_ip.keys()):
-        if ip not in top2_ips:
-            del packets_by_ip[ip]
-
-    # ip_x = smaller sender, ip_y = larger sender
-    ip_y, count_y = top2[0]   # larger
-    ip_x, count_x = top2[1]   # smaller
-
-    # ------------------------------------------------------------------ #
-    # Step 2: Classify protocol by y:x ratio                             #
-    # ------------------------------------------------------------------ #
-
-    ratio = count_y / count_x  # 1.0 = equal, 1.5 = ENIP
-
-    # Midpoint between 1.0 and 1.5 is 1.25 — use as the boundary
-    RATIO_THRESHOLD = 1.1
-
-    if ratio < RATIO_THRESHOLD:
-        # ratio close to 1.0 → Unconnected
-        # First sender chronologically = PLC, second = SCADA
-        protocol = "Unconnected"
-        first_ts_y = packets_by_ip[ip_y][0][1]  # timestamp of first packet from ip_y
-        first_ts_x = packets_by_ip[ip_x][0][1]  # timestamp of first packet from ip_x
-        if first_ts_y <= first_ts_x:
-            ip_plc, ip_scada = ip_y, ip_x
+    for pkt in cap:
+        # print(pkt.layers)
+        size = extract_payload_sizes(pkt, ip_address)
+        timestamp = float(pkt.sniff_timestamp)
+        ipsrc = pkt.ip.src
+        ipdst = pkt.ip.dst
+        ack_rtt = -99
+        ack_frame = -99
+        protocol = pkt.highest_layer
+        # print(protocol)
+        if start_ts == -99:
+            start_ts = timestamp
+            timestamp = 0
         else:
-            ip_plc, ip_scada = ip_x, ip_y
-    else:
-        # ratio close to 1.5 → Connected
-        # Larger sender = PLC, smaller sender = SCADA
-        protocol = "Connected"
-        ip_plc, ip_scada = ip_y, ip_x
+            timestamp = timestamp - start_ts
+            if timestamp > 14400:
+                break
+        # time_delta = 0.0 if prev_time is None else timestamp - prev_time
+        # result.append((size, time_delta))
+        if hasattr(pkt.tcp, 'analysis_ack_rtt'):
+            ack_rtt = pkt.tcp.analysis_ack_rtt
+            ack_frame = pkt.tcp.analysis_acks_frame
+        # print(protocol, size)
+        if size!=0:
+            for s in size:
+                if (abs(s)>70 and s!=112 and s!=104 and s!=-132): # Note: Uncomment for enip
+                    result.append((s, timestamp, ipsrc, ipdst, protocol, ack_rtt, ack_frame))
+        # prev_time = timestamp
 
-    # ------------------------------------------------------------------ #
-    # Step 3: Build and return result                                     #
-    # ------------------------------------------------------------------ #
-
-    result = {
-        "ip_plc":        ip_plc,
-        "ip_scada":      ip_scada,
-        "protocol":      protocol,
-        "packet_counts": dict(top2),
-    }
-
-    # print(f"[detect_protocol] Packet counts : {dict(top2)}")
-    # print(f"[detect_protocol] y:x ratio     : {ratio:.3f}")
-    # print(f"[detect_protocol] Protocol      : {protocol}")
-    # print(f"[detect_protocol] PLC           : {ip_plc}  ({counts[ip_plc]} pkts)")
-    # print(f"[detect_protocol] SCADA         : {ip_scada} ({counts[ip_scada]} pkts)")
-
+    cap.close()
+    print("pcap processing completed - Extracted all relevant packet information")
     return result
+
 
 def main():
 
-    pcap_file, ip_compromised, superperiod = parse_arguments()
+    pcap_file, ip_address_1, ip_address_2, superperiod = parse_arguments()
     print(pcap_file)
     # print(ip_compromised)
 
     ############################################################################
-    # Step 1: Extract packet lengths and inter-packet time intervals of all packets destined to the compromised ip address
-    packets_file = pcap_file.split('.pcap')[0]+'_packets.pkl'
-    with open(packets_file, 'rb') as picklefile:
+    # Step 1: Extract packet metadata
+
+    packets_file = pcap_file.split('.pcap')[0]+'_packets_1.pkl'
+
+    if os.path.exists(packets_file):
+        with open(packets_file, 'rb') as picklefile:
             packets = pickle.load(picklefile)
+    else:
+        packets = process_pcap(pcap_file, ip_address_1, ip_address_2)
+        # print(packets)
+        with open(packets_file,'wb') as picklefile:
+            pickle.dump(packets,picklefile)
+
 
     ############################################################################
     # Step 2: Detect endpoint ip addresses and protocol
-    endpoints_and_protocol = detect_protocol(packets)
+    # endpoints_and_protocol = detect_protocol(packets)
 
     ########################################################################
     # Step 3: Detect state transitions
@@ -135,7 +153,10 @@ def main():
     # analyze_packet_segments(packets[endpoints_and_protocol['ip_plc']],[253,1206,115,113,73,97,100,93,103,85,89,120,83,81,72,109,101,76,91,189],420)
     # analyze_packet_segments(packets[endpoints_and_protocol['ip_plc']],[],superperiod)
     #######################################################################
-    results = detect_superperiod_differences(packets[endpoints_and_protocol['ip_plc']], L= superperiod)
+    # print(packets[endpoints_and_protocol['ip_plc']])
+
+
+    results = detect_superperiod_differences(packets, L= superperiod)
 
     # ######### Uncomment following block ################
     for d in results["all_differences"]:
@@ -145,15 +166,15 @@ def main():
               f"size_set_diff={d['size_set_diff']} | "
               f"combined_diff={d['combined_diff']}")
 
-    results = detect_superperiod_differences(packets[endpoints_and_protocol['ip_scada']], L= superperiod) 
-
-    # ######### Uncomment following block ################
-    for d in results["all_differences"]:
-        print(f"Seg {d['segment_index']}: "
-              f"[{d['start_time']:.2f}-{d['end_time']:.2f}]s | "
-              f"num_packets_diff={d['num_packets_diff']} | "
-              f"size_set_diff={d['size_set_diff']} | "
-              f"combined_diff={d['combined_diff']}")
+    # results = detect_superperiod_differences(packets[endpoints_and_protocol['ip_scada']], L= superperiod)
+    #
+    # # ######### Uncomment following block ################
+    # for d in results["all_differences"]:
+    #     print(f"Seg {d['segment_index']}: "
+    #           f"[{d['start_time']:.2f}-{d['end_time']:.2f}]s | "
+    #           f"num_packets_diff={d['num_packets_diff']} | "
+    #           f"size_set_diff={d['size_set_diff']} | "
+    #           f"combined_diff={d['combined_diff']}")
     ############# Uncomment until here ############################
 
     # debug_zone_counts(packets, zones, L=superperiod)

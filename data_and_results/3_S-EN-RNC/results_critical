@@ -1,0 +1,36 @@
+Parsed all input arguments
+./data_and_results/3_S-EN-RNC/s-en-rnc.pcap
+Starting pcap processing
+pcap processing completed - Extracted all relevant packet information
+Seg 1: [493.00-913.00]s | num_packets_diff=51 | size_set_diff=4 | combined_diff=55
+Seg 2: [913.00-1333.00]s | num_packets_diff=270 | size_set_diff=4 | combined_diff=274
+Seg 3: [1333.00-1753.00]s | num_packets_diff=18 | size_set_diff=1 | combined_diff=19
+Seg 4: [1753.00-2173.00]s | num_packets_diff=135 | size_set_diff=1 | combined_diff=136
+Seg 5: [2173.00-2593.00]s | num_packets_diff=3 | size_set_diff=1 | combined_diff=4
+Seg 6: [2593.00-3013.00]s | num_packets_diff=27 | size_set_diff=0 | combined_diff=27
+Seg 7: [3013.00-3433.00]s | num_packets_diff=108 | size_set_diff=0 | combined_diff=108
+Seg 8: [3433.00-3853.00]s | num_packets_diff=75 | size_set_diff=0 | combined_diff=75
+Seg 9: [3853.00-4273.00]s | num_packets_diff=37 | size_set_diff=4 | combined_diff=41
+Seg 10: [4273.00-4693.00]s | num_packets_diff=48 | size_set_diff=5 | combined_diff=53
+Seg 11: [4693.00-5113.00]s | num_packets_diff=22 | size_set_diff=1 | combined_diff=23
+Seg 12: [5113.00-5533.00]s | num_packets_diff=153 | size_set_diff=0 | combined_diff=153
+Seg 13: [5533.00-5953.00]s | num_packets_diff=37 | size_set_diff=0 | combined_diff=37
+Seg 14: [5953.00-6373.00]s | num_packets_diff=43 | size_set_diff=1 | combined_diff=44
+Seg 15: [6373.00-6793.00]s | num_packets_diff=114 | size_set_diff=1 | combined_diff=115
+Seg 16: [6793.00-7213.00]s | num_packets_diff=178 | size_set_diff=1 | combined_diff=179
+Seg 17: [7213.00-7633.00]s | num_packets_diff=115 | size_set_diff=5 | combined_diff=120
+Seg 18: [7633.00-8053.00]s | num_packets_diff=45 | size_set_diff=4 | combined_diff=49
+Seg 19: [8053.00-8473.00]s | num_packets_diff=108 | size_set_diff=0 | combined_diff=108
+Seg 20: [8473.00-8893.00]s | num_packets_diff=187 | size_set_diff=1 | combined_diff=188
+Seg 21: [8893.00-9313.00]s | num_packets_diff=170 | size_set_diff=1 | combined_diff=171
+Seg 22: [9313.00-9733.00]s | num_packets_diff=20 | size_set_diff=0 | combined_diff=20
+Seg 23: [9733.00-10153.00]s | num_packets_diff=108 | size_set_diff=2 | combined_diff=110
+Seg 24: [10153.00-10573.00]s | num_packets_diff=83 | size_set_diff=2 | combined_diff=85
+Seg 25: [10573.00-10993.00]s | num_packets_diff=232 | size_set_diff=3 | combined_diff=235
+Seg 26: [10993.00-11413.00]s | num_packets_diff=106 | size_set_diff=3 | combined_diff=109
+Seg 27: [11413.00-11833.00]s | num_packets_diff=3 | size_set_diff=0 | combined_diff=3
+Seg 28: [11833.00-12253.00]s | num_packets_diff=67 | size_set_diff=0 | combined_diff=67
+Seg 29: [12253.00-12673.00]s | num_packets_diff=22 | size_set_diff=1 | combined_diff=23
+Seg 30: [12673.00-13093.00]s | num_packets_diff=518 | size_set_diff=2 | combined_diff=520
+Seg 31: [13093.00-13513.00]s | num_packets_diff=23 | size_set_diff=1 | combined_diff=24
+Seg 32: [13513.00-13933.00]s | num_packets_diff=86 | size_set_diff=1 | combined_diff=87
