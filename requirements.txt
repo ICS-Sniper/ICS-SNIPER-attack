@@ -1,0 +1,21 @@
+# Python 3.10.12
+#
+# External (non-pip) dependency: tshark, from Wireshark >= 3.x.
+#   Debian/Ubuntu : sudo apt install tshark
+#   macOS         : brew install wireshark
+# pyshark is only a wrapper around the tshark binary; it will not work without it.
+#
+
+pyshark==0.6
+numpy==1.24.4
+scipy==1.10.1
+scikit-learn==1.3.2
+matplotlib==3.7.5
+
+# Pulled in automatically, listed for reproducibility:
+#   lxml, termcolor, appdirs, packaging      (pyshark)
+#   joblib, threadpoolctl                    (scikit-learn)
+#   contourpy, cycler, fonttools, kiwisolver, pillow, pyparsing, python-dateutil, six  (matplotlib)
+#
+# Standard library, no install needed:
+#   argparse, collections, csv, datetime, heapq, math, os, pickle, statistics, typing
