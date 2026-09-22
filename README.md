@@ -5,13 +5,7 @@ This repository contains the implementation of **ICS-Sniper**. It has two parts:
 - **Process profiling** (`process_profiling/`) — analyzes an encrypted VPN traffic capture to estimate the **superperiod** *L* and to rank the **critical superperiods**.
 - **Active attack** (`active_attack/`) — replays a cycle and drops payload packets in the two targeted superperiods.
 
-
-
----
-**Experiment E1: Superperiod identification**, which supports
-**Claim 1** of the paper (ICS-Sniper identifies the superperiod with 100% accuracy across all eight configurations; see §VI-A and Table V).
-
-## 1. Prerequisites
+**Prerequisites**
 
 - Linux (tested on Ubuntu 22.04).
 - Python 3 installed on the machine.
@@ -23,7 +17,7 @@ This repository contains the implementation of **ICS-Sniper**. It has two parts:
 
 ---
 
-## 2. Repository layout
+**Repository layout**
 
 ```
 .
@@ -43,11 +37,13 @@ This repository contains the implementation of **ICS-Sniper**. It has two parts:
 └── README.md
 ```
 
-Place each downloaded `.pcap` in its corresponding `data_and_results/<config>/` folder before running. You can skip the metadata extraction step if you do not delete the zipped .pkl file in each config folder. That will cut down the total execution time. Unzip the .zip files inside each `data_and_results/<config>/` folder before starting the code execution.
+Place each downloaded `.pcap` in its corresponding `data_and_results/<config>/` folder before running. You can skip the metadata extraction step if you do not delete the zipped .pkl files in each config folder. That will cut down the total execution time. Unzip the .zip files inside each `data_and_results/<config>/` folder before starting the code execution.
 
 ---
+## Experiment E1: Superperiod identification
+It supports **Claim 1** of the paper (ICS-Sniper identifies the superperiod with 100% accuracy across all eight configurations; see §VI-A and Table V).
 
-## 3. Quick start (all configurations)
+**1. Quick start (all configurations)**
 
 From the repository root:
 
@@ -55,8 +51,7 @@ From the repository root:
 bash test_superperiod_identification.sh
 ```
 
-This runs the profiling module on all eight captures in turn, printing the
-configuration number (1–8) to the terminal as it progresses. Each run writes its
+This runs the profiling module on all eight captures in turn. Each run writes its
 estimated superperiod to:
 
 ```
@@ -65,19 +60,17 @@ estimated superperiod to:
 
 ---
 
-## 4. Running a single configuration
+**2. Running a single configuration**
 
 The underlying command for one capture is:
 
 ```bash
-sudo python3 ./process_profiling/identify_superperiod.py <path-to-pcap> <endpoint-IP>
+sudo python3 ./process_profiling/identify_superperiod.py <path-to-pcap> <compromised-router-IP>
 ```
 
 - `<path-to-pcap>` — the capture to analyze,
   e.g. `./data_and_results/2_S-EN-BASE/s-en-base.pcap`.
-- `<endpoint-IP>` — the VPN endpoint IP for that capture, used to determine
-  packet direction (PLC→SCADA vs SCADA→PLC). Use the value listed in §6; it is
-  already filled in per configuration in the test script.
+- `<compromised-router-IP>` — the IP address of the compromised router is already filled in per configuration in the test script.
 
 Example (writing the result into the configuration folder):
 
@@ -89,14 +82,13 @@ sudo python3 ./process_profiling/identify_superperiod.py \
 
 ---
 
-## 5. Where to check the results
+**3. Where to check the results**
 
 After a run, open the `results_superperiod` file in the corresponding
-configuration folder (or read the terminal output) and compare the estimated
-superperiod against the expected value in §6.
+configuration folder.
 
 ---
-## 6. Interpreting `results_superperiod`
+**4. Interpreting `results_superperiod`**
 
 Each configuration's `results_superperiod` file works through the paper's three
 metadata features (overlap-region durations, inter-packet timings/IATs, and
@@ -124,7 +116,7 @@ follows:
 
 ---
 
-## 6. Troubleshooting
+**5. Troubleshooting**
 
 - **Permission or capture-read errors:** run with `sudo` (the scripts read raw
   pcaps).
@@ -136,19 +128,20 @@ follows:
 
 ---
 
-## 7. Where this fits in the evaluation
+**6. Where this fits in the evaluation**
 
-This experiment (E1) is the first of four. After confirming the superperiods
-here, proceed to critical-superperiod ranking (E2), attack impact (E3), and
+This experiment (E1) is the first of four. After confirming the superperiods and endpoint IP addresses here, proceed to critical-superperiod ranking (E2), attack impact (E3), and
 detector evasion (E4, in the `SOTA-detectors-NDSS` repository), as described in
 the artifact appendix and the top-level dataset README.
 
 
-
 ---
-**Experiment E2: Critical Superperiod identification**, which supports
-**Claim 2** of the paper (ICS-Sniper correctly identifies the critical superperiods, ranking the true first critical superperiod first in 5 out of 7 cases and second in the remaining ones.
+## Experiment E2: Critical Superperiod identification
+
+It supports **Claim 2** of the paper (ICS-Sniper correctly identifies the critical superperiods, ranking the true first critical superperiod first in 5 out of 7 cases and second in the remaining ones.
 Once the superperiod is known (from E1), this step splits the trace into consecutive superperiod-length segments and compares each segment with its predecessor to flag and rank the **critical superperiods**.
+
+**1. Quick start (all configurations)**
 
   Run all configurations from the repository root:
 
@@ -156,12 +149,15 @@ Once the superperiod is known (from E1), this step splits the trace into consecu
   bash test_critical_superperiod.sh
   ```
 
-  This runs on configurations 1–7 (S-EN-PCP-12 is not part of E2), printing the
-  configuration number to the terminal. Each run writes its output to:
+  This runs on configurations 1–7 (S-EN-PCP-12 is not part of E2). Each run writes its output to:
 
   ```
   ./data_and_results/<config>/results_critical
   ```
+
+  ---
+
+  **2. Running a single configuration**  
 
   The command for a single configuration is:
 
@@ -169,15 +165,22 @@ Once the superperiod is known (from E1), this step splits the trace into consecu
   sudo python3 ./process_profiling/critical_superperiod.py <path-to-pcap> <endpoint-IP> <superperiod>
   ```
 
-  - `<path-to-pcap>` and `<endpoint-IP>` — as in E1 (see §4 and §7).
-  - `<superperiod>` — the superperiod (in seconds) recovered in E1 for that
+  - `<path-to-pcap>` — as in E1.
+  - `<superperiod>` and `<endpoint-IP>` — the superperiod (in seconds) and VPN endpoint IP addresses recovered in E1 for that
     configuration; it is already filled in per configuration in the test script.
 
   > **Note:** the script **appends** (`>>`) to `results_critical`. Delete the
   > existing `results_critical` files before re-running to avoid mixing results.
 
   ---
-## 8. Interpreting `results_critical`
+  **3. Where to check the results**
+
+  After a run, open the `results_critical` file in the corresponding
+  configuration folder.
+
+  ---
+
+**4. Interpreting `results_critical`**
 
   Each line reports one superperiod segment compared to the one before it:
 
