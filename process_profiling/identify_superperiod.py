@@ -212,44 +212,6 @@ def main():
     print ("Analyzing SCADA->router packet sizes:\n")
     superperiod, zones = analyze_sizes(packets[endpoints_and_protocol['ip_scada']])
     print("\n\n")
-    ########################################################################
-    # Step 3: Detect state transitions
-    # packets_file = pcap_file.split('.pcap')[0]+'_packets.pkl'
-    # with open(packets_file, 'rb') as picklefile:
-    #     packets = pickle.load(picklefile)
-
-    # analyze_packet_segments(packets[endpoints_and_protocol['ip_plc']],[253,1206,115,113,73,97,100,93,103,85,89,120,83,81,72,109,101,76,91,189],420)
-    # analyze_packet_segments(packets[endpoints_and_protocol['ip_plc']],[],180)
-    ########################################################################
-    # results = detect_superperiod_differences(packets[endpoints_and_protocol['ip_plc']], L= 420) # L needs to be manually configured now. For distinct superperiods with equally high score, perform LCM, else take average
-    #
-    # print(results)
-    # print("Segment with maximum 84-packet count difference:")
-    # print(results["max_diff_segment"])
-    #
-    # print("\nAll segment differences:")
-    # ######### Uncomment following block ################
-    # for d in results["all_differences"]:
-    #     print(f"Seg {d['segment_index']}: "
-    #           f"[{d['start_time']:.2f}-{d['end_time']:.2f}]s | "
-    #           f"num_packets_diff={d['num_packets_diff']} | "
-    #           f"size_set_diff={d['size_set_diff']} | "
-    #           f"combined_diff={d['combined_diff']}")
-    ############# Uncomment until here ############################
-
-    # debug_zone_counts(packets, zones, L=superperiod)
-
-    # results = detect_superperiod_differences_with_zones(packets, zones, superperiod, ip_address_2)
-    #
-    # # results = detect_superperiod_differences_with_zones(packets, zones, L=60.0, src_ip="10.0.0.1")
-    #
-    # for d in results["all_differences"]:
-    #     print(f"Seg {d['segment_index']}: [{d['start_time_ms']:.0f}-{d['end_time_ms']:.0f}] ms | "
-    #           f"84 diff={d['count_diff']}, zones diff={d['zone_count_diff']}, "
-    #           f"zone_dur diff={d['zone_duration_diff_ms']:.1f} ms")
-
-    #######################################################
-
 
 
 if __name__ == "__main__":
