@@ -1,0 +1,49 @@
+**Endpoint IP addresses**
+
+1. S-MD-BASE
+PLC: 16.145.224.84
+SCADA: 35.160.103.117
+ROUTER: 172.31.36.198
+superperiod (s): 420
+
+2. S-EN-BASE
+PLC: 96.49.203.41
+SCADA: 34.215.55.145
+ROUTER: 10.0.0.11
+superperiod (s): 420
+
+3. S-EN-RNC
+PLC: 96.49.203.41
+SCADA: 34.215.55.145
+ROUTER: 10.0.0.11
+superperiod (s): 420
+
+4. S-EN-PCP
+PLC: 96.49.203.41
+SCADA: 34.215.55.145
+ROUTER: 10.0.0.11
+superperiod (s): 180
+
+5. H-MD-BASE
+PLC: 128.189.240.15
+SCADA: 34.217.194.166
+ROUTER: 10.0.0.6
+superperiod (s): 30
+
+6. H-MD-LOSS1
+PLC: 128.189.240.15
+SCADA: 44.245.211.234
+ROUTER: 10.0.0.6
+superperiod (s): 30
+
+7. H-MD-LOSS2
+PLC: 128.189.240.15
+SCADA: 44.245.211.234
+ROUTER: 10.0.0.6
+superperiod (s): 210
+
+8. S-EN-PCP-12
+PLC: 35.88.155.6
+SCADA: 44.248.36.141
+ROUTER: 10.0.0.11
+superperiod (s): 180
