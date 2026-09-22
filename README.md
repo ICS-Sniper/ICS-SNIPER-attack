@@ -21,8 +21,7 @@ This repository contains the implementation of **ICS-Sniper**. It has two parts:
 
 ```
 .
-├── process_profiling/
-│   └── identify_superperiod.py         # superperiod estimation (E1)
+├── ...
 ├── data_and_results/
 │   ├── 1_S-MD-BASE/       s-md-base.pcap
 │   ├── 2_S-EN-BASE/       s-en-base.pcap
@@ -32,7 +31,9 @@ This repository contains the implementation of **ICS-Sniper**. It has two parts:
 │   ├── 6_H-MD-LOSS1/      h-md-loss1.pcap
 │   ├── 7_H-MD-LOSS2/      h-md-loss2.pcap
 │   └── 8_S-EN-PCP-12/     s-en-pcp-12.pcap
+├── ...
 ├── test_superperiod_identification.sh  # runs E1 on all 8 configurations
+├── test_critical_superperiod.sh  # runs E2 on 7 configurations
 ├── requirements.txt
 └── README.md
 ```
@@ -182,7 +183,12 @@ Once the superperiod is known (from E1), this step splits the trace into consecu
 
 **4. Interpreting `results_critical`**
 
-  Each line reports one superperiod segment compared to the one before it:
+Each superperiod is characterised relative to its predecessor by two quantities: `num_packets_diff`,
+the change in packet count, and `size_set_diff`, the number of packet sizes observed in the
+superperiod that were not present in the preceding one. The critical superperiod is the one that
+marks a state transition rather than ordinary variation within an established state.
+
+  Each line of a `results_critical` file reports one superperiod segment compared to the one before it:
 
   ```
   Seg N: [start-end]s | num_packets_diff=A | size_set_diff=B | combined_diff=A+B
@@ -194,23 +200,54 @@ Once the superperiod is known (from E1), this step splits the trace into consecu
     segment (heuristic ii of Step 4).
   - `combined_diff` — the sum of the two, used as the tie-break magnitude.
 
-  To read off the critical superperiods:
+  Determining the critical superperiods:
 
-  1. Any segment with a non-zero difference is a candidate critical superperiod.
-  2. Rank candidates first by **how many heuristics differ** — segments where
-     **both** `num_packets_diff` and `size_set_diff` are non-zero outrank those
-     where only one is — then by **`combined_diff`** magnitude.
-  3. The top-ranked segment is ICS-Sniper's first-choice critical superperiod; its
-     `[start-end]s` window is when the attack would target.
-  4. Cross-check against Table VI. The true first critical superperiod is ranked
-     first in 71% of cases and second otherwise, so the number of attempts is
-     usually 1 and at most 2. Attempts can exceed 1 when the top-ranked segment's
-     transitions are purely local and thus non-disruptive (Appendix B).
+  ### Modbus configurations (`*-MD-*`)
 
-  **Worked example (S-EN-RNC, superperiod 420 s):**
+  Modbus message encoding is highly regular: a given register-polling pattern produces a small,
+  essentially fixed set of frame lengths, so packet-size diversity is near-constant while a process
+  remains in a single state. `size_set_diff` therefore has a low noise floor in these captures, and
+  any superperiod introducing substantially more previously-unseen packet sizes than the rest is an
+  unambiguous indication that new message types have entered the stream, thereby indicating a state
+  transition. **For Modbus configurations we accordingly treat `size_set_diff` as the primary
+  discriminator.**
 
-  ```
-  Seg 1: [420.00-840.00]s | num_packets_diff=897 | size_set_diff=7 | combined_diff=904
-  Seg 2: [840.00-1260.00]s | num_packets_diff=40  | size_set_diff=6 | combined_diff=46
-  ...
-  ```  
+  This criterion is decisive for `H-MD-BASE`, `H-MD-LOSS-1`, and `H-MD-LOSS-2`, in each of which
+  Seg 1 is the sole holder of the maximum and is separated from the remainder of the capture by a
+  wide margin:
+
+  | Configuration | Seg 1 `size_set_diff` | Next-highest in capture | Capture median | Selected |
+  |---|---|---|---|---|
+  | `H-MD-BASE`   | 12 | 3 | 0 | Seg 1 |
+  | `H-MD-LOSS-1` | 12 | 2 | 0 | Seg 1 |
+  | `H-MD-LOSS-2` | 14 | 9 | 2 | Seg 1 |
+
+  *(Table rows follow the order in which the captures are listed in the repository; confirm the
+  labels against your own capture index before publishing.)*
+
+  ### Override: dominant packet-count
+
+  The size-set criterion presumes that `size_set_diff` is able to discriminate. Where a capture
+  exhibits a superperiod whose packet count spikes sharply above every other superperiod — including
+  above the superperiod holding the highest `size_set_diff` — that spike is the stronger and more
+  direct evidence of a state transition, and **it takes precedence over the size-set criterion.**
+
+  `S-MD-BASE` is the case in point. Its size-set channel is degenerate: `size_set_diff` spans only
+  0–3, and the maximum value of 3 is attained by four different superperiods (Segs 6, 7, 10 and 28). The packet-count channel, on the other hand, isolates a single superperiod, Seg 1, carrying 589 extra packets  against a next-highest value of 517. Seg 1 is therefore designated the critical superperiod for this configuration.
+
+  ### Note on S- and H- configurations
+
+  The `S-` and `H-` variants implement the same underlying process but do not share a message format.
+  The apparent inconsistency between `S-MD-BASE`, selected on packet-count excursion, and the `H-MD-*`
+  configurations, selected on size-set novelty, is a consequence of that difference in encoding rather
+  than of the selection procedure, and is expected.
+
+### ENIP configurations (`*-EN-*`)
+We follow the same logic as the H-MD-* configurations here. Following that, Seg1 is the second choice for S-EN-BASE and S-EN-PCP. For S-EN-RNC, Seg2 is the original critical superperiod and it is the first choice.
+
+> Seg 2 is the real critical segment of S-EN-RNC
+> The ground truth about state changes were inferred from the SCADA log files (scadalogs.csv) for each configuration, stored in the Dataset folder on Google Drive.
+> The H-MD-* configurations were left running for longer than one operational cycle. Please consider only the first 30, 30 and 34 superperiods for H-MD-BASE, H-MD-LOSS1 and H-MD-LOSS2 respectively.
+
+## Experiment E3: Attack execution
+Run the testbed for one complete operational cycle. Just when the PLC-to-SCADA communication begins, execute active_attack.sh at the compromised router. 
