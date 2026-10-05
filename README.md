@@ -250,4 +250,24 @@ We follow the same logic as the H-MD-* configurations here. Following that, Seg1
 > The H-MD-* configurations were left running for longer than one operational cycle. Please consider only the first 30, 30 and 34 superperiods for H-MD-BASE, H-MD-LOSS1 and H-MD-LOSS2 respectively.
 
 ## Experiment E3: Attack execution
-Run the testbed for one complete operational cycle. Just when the PLC-to-SCADA communication begins, execute `active_attack/active_attack.sh` at the compromised router. Before running the script, open it and configure the packet drop durations for each attack scenario. Comment/uncomment lines 2, 3, 12, and 13, as required.
+Run the testbed for one complete operational cycle. Just when the PLC-to-SCADA communication begins, execute `active_attack/active_attack.sh` at the compromised router. Before running the script, open it and configure the packet drop durations for each attack scenario. Comment/uncomment lines 2, 3, 12, and 13, as required. You can skip executing the attacks if time/infrastructure is limited, and move to attack impact assessment from network traces and logs recorded from our testbed.
+
+### Attack impact assessment
+
+`attack_impact_assessment.sh` measures the impact of an attack scenario (S1, S2 or S3) from our recorded traces. It needs `curl`, `tshark`, `awk` and internet access; it does not need `sudo`.
+
+From the folder containing the script:
+
+```bash
+cd attack_impact
+bash attack_impact_assessment.sh S1    # or S2, S3
+```
+
+If no scenario is given, the script asks for one. It downloads the reference and attack traces (`.pcap`) and SCADA logs (`.csv`) from Google Drive into `./<scenario>/`, then prints:
+
+1. **Packet drops** — the percentage of PLC payload packets dropped in the attack trace, relative to the reference trace(s).
+2. **Process impact** — computed from the SCADA logs, with time measured from the process start (the first `HMI.P1.State`–`HMI.P6.State` change from 0 to 1):
+   - **S1, S3:** the delay in starting clean water pumping (`HMI.P501.Status` changing from 2 to 1).
+   - **S2:** the delay in finally closing the P3 backwash valve (the second `HMI.MV304.Status` change from 1 to 2).
+
+All times are reported in minutes. Counting packets in the large traces can take several minutes.
