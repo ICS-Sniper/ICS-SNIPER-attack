@@ -163,12 +163,11 @@ Once the superperiod is known (from E1), this step splits the trace into consecu
   The command for a single configuration is:
 
   ```bash
-  sudo python3 ./process_profiling/critical_superperiod.py <path-to-pcap> <endpoint-IP> <superperiod>
+  sudo python3 ./process_profiling/critical_superperiod.py <path-to-pcap> <endpoint_1-IP> <endpoint_2-IP> <superperiod>
   ```
 
   - `<path-to-pcap>` — as in E1.
-  - `<superperiod>` and `<endpoint-IP>` — the superperiod (in seconds) and VPN endpoint IP addresses recovered in E1 for that
-    configuration; it is already filled in per configuration in the test script.
+  - `<superperiod>`, `<endpoint_1-IP>` and `<endpoint_2-IP>` — the superperiod (in seconds) and VPN endpoint IP addresses recovered in E1 for that configuration; it is already filled in per configuration in the test script.
 
   > **Note:** the script **appends** (`>>`) to `results_critical`. Delete the
   > existing `results_critical` files before re-running to avoid mixing results.
