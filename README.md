@@ -1,5 +1,7 @@
 # ICS-Sniper — Attack Implementation
 
+Archived as part of the ICS-Sniper artifact: https://doi.org/10.5281/zenodo.23737012
+
 This repository contains the implementation of **ICS-Sniper**. It has two parts:
 
 - **Process profiling** (`process_profiling/`) — analyzes an encrypted VPN traffic capture to estimate the **superperiod** *L* and to rank the **critical superperiods**.
